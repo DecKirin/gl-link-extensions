@@ -354,22 +354,49 @@ router shows up in GlassyBattery until you quit.
 **In the app:** the Log under Details shows what it printed and every error, including a
 `fetch` or `connect` refused for want of a permission.
 
-**Automated:** run the package's own script with the real runtime and fake routers and
-network, in this repository's tests (`swift test`).
+**Automated:** a test of your own runs the package's script in the real runtime, against
+routers and a network you make up. `GLLinkExtensionTesting`, a library of this repository,
+has the fakes:
 - `ScriptExtension(package:context:network:)` runs a package.
-- `FakeContext` supplies the routers and keeps the secrets.
-- `FakeNetwork` answers `fetch` and hands out sockets that record what's sent and answer from
-  a closure.
-- `HelloTests` runs the quick start above.
-- `GlassyBatteryTests` runs GlassyBattery against a fake BatteryBridge: registering, icons,
-  updates, Reset Connection.
+- `FakeContext` supplies the routers, counts refreshes and keeps the secrets.
+- `FakeNetwork` answers `fetch` from a closure, and hands out `FakeSocket`s that record what's
+  sent and answer from another.
+- `eventually("…") { … }` waits for what a promise or a timer brings.
+
+In your extension's repository, a `Package.swift` with one test target:
 
 ```swift
-let ext = ScriptExtension(package: try ExtensionPackage(at: url), context: context, network: fake)
+// swift-tools-version: 5.9
+import PackageDescription
+
+let package = Package(
+    name: "Thing",
+    platforms: [.macOS(.v14)],
+    dependencies: [.package(url: "https://github.com/DecKirin/gl-link-extensions", branch: "main")],
+    targets: [
+        .testTarget(name: "ThingTests", dependencies: [
+            .product(name: "GLLinkExtensionKit", package: "gl-link-extensions"),
+            .product(name: "GLLinkExtensionTesting", package: "gl-link-extensions"),
+        ]),
+    ]
+)
+```
+
+```swift
+let context = FakeContext()
+context.routers = [RouterInfo(id: UUID(), name: "Mudi 7", model: nil,
+                              battery: BatteryReading(level: 85, charging: true), updated: Date())]
+let ext = ScriptExtension(package: try ExtensionPackage(at: url), context: context,
+                          network: FakeNetwork(http: { _ in (404, "") }))
 ext.start()
 XCTAssertEqual(ext.status, "Watching 1 battery.")
 ext.perform(ext.actions.first { $0.id == "read" }!)
+try await eventually("it read again") { context.refreshes == 1 }
 ```
+
+With that dependency, `swift run gllink-ext …` works in your repository too.
+[GlassyBattery](https://github.com/DecKirin/gl-link-glassybattery) is set up this way: its tests run it against a fake BatteryBridge
+(registering, icons, updates, Reset Connection).
 
 ## Shipping and updating
 
@@ -417,11 +444,12 @@ points at a release in the extension's own repository. Its rules are in
 **To update:** raise `version`, `gllink-ext publish` again, and send the new entry. Installed
 copies show "Update to 1.1.0".
 
-GL-Link's own are in `extensions/` in this repository; `just build` packs them.
+`Hello.ext` is in `extensions/` in this repository; [GlassyBattery](https://github.com/DecKirin/gl-link-glassybattery) has a repository
+of its own, as yours will.
 
 ## A worked example: GlassyBattery
 
-`extensions/GlassyBattery.ext` puts each router with a battery in
+[`GlassyBattery.ext`](https://github.com/DecKirin/gl-link-glassybattery), in a repository of its own, puts each router with a battery in
 [GlassyBattery](https://github.com/DecKirin/AirBattery), a Mac menu bar app, through its
 BatteryBridge API. Its parts, in `main.js`:
 
@@ -435,7 +463,7 @@ BatteryBridge API. Its parts, in `main.js`:
 | `reset` | Its **Reset Connection** action: forget the token, sign in again |
 | `gllink.on("stop")` | Closes the stream, which takes the routers out of GlassyBattery at once |
 
-Its icons are made from GL-Link's router symbols by `just ext-icons`.
+Its icons are made from GL-Link's router symbols.
 
 ## Router extensions
 

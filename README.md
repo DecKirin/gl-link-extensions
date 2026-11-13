@@ -28,7 +28,9 @@ Then read [`docs/writing-extensions.md`](docs/writing-extensions.md).
 |---|---|
 | [`docs/writing-extensions.md`](docs/writing-extensions.md) | The guide: the package, the manifest, permissions, the script API, testing, signing, sharing |
 | [`docs/extensions.md`](docs/extensions.md) | The design: the two kinds of extension, trust, the marketplace, and the router side's protocol |
-| [`extensions/`](extensions) | GL-Link's own extensions, to read and to start from: `Hello.ext`, `GlassyBattery.ext` |
+| [`extensions/`](extensions) | `Hello.ext`, the smallest whole extension, to read and to start from |
+| `Sources/GLLinkExtensionTesting` | For your extension's own tests: fake routers and a fake network to run its real package against |
+| [`gl-link-glassybattery`](https://github.com/DecKirin/gl-link-glassybattery) | A whole extension in a repository of its own, as yours would be: tests, signing, releases, its marketplace entry |
 | `Sources/gllink-ext` | The tool: `new`, `check`, `run`, `keygen`, `build`, `verify`, `install`, `publish` |
 | `Sources/GLLinkExtensionKit` | What the tool and the GL-Link apps both run: reading and checking packages, signatures, the packed `.glext` form, the script runtime, the marketplace's list |
 | [`MARKETPLACE.md`](MARKETPLACE.md), `entries/`, `index.json` | The marketplace: its rules, one entry per shared extension, and the signed list the app reads |

@@ -152,7 +152,7 @@ extension ExtensionPackage {
                                  files: Dictionary(uniqueKeysWithValues: now.map { ($0.path, $0.hash) }),
                                  signature: key.sign(Self.signedText(now)).base64EncodedString())
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         try encoder.encode(file).write(to: url.appendingPathComponent(Self.signatureFile))
         return try ExtensionPackage(at: url)
     }

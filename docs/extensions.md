@@ -423,7 +423,7 @@ those files. A folder can't be downloaded, attached or shared from an iPhone as 
   "summary": "Shows your routers' batteries in GlassyBattery: its menu bar, widgets and your other Macs.",
   "symbol": "battery.75percent",
   "author": "DecKirin",
-  "repo": "https://github.com/DecKirin/gl-link-extensions",
+  "repo": "https://github.com/DecKirin/gl-link-glassybattery",
   "platforms": ["macos"],
   "host_api": 1,
   "main": "main.js",
@@ -503,8 +503,8 @@ for both apps. The code:
   - `ExtensionArchive` packs and unpacks a `.glext`; `Catalog` is the marketplace's list.
   - `ScriptExtension` runs one.
   - `gllink-ext`, the author's tool, is the same package's executable.
-  - Tests in `swift test` there, including the real `GlassyBattery.ext` against a fake
-    BatteryBridge.
+  - `GLLinkExtensionTesting`: fakes for an extension's own tests.
+  - Tests in `swift test` there.
 - In the apps (GL-Link's own repository): `ExtensionHost` installs, runs and removes;
   `ExtensionCatalog` reads the marketplace and downloads from it; `ExtensionsView` and
   `ExtensionCatalogView` are the Settings pages.
@@ -513,7 +513,8 @@ A `.glext` has its own type too (`com.deckirin.gllink.extension-archive`).
 
 ### The first app extension: GlassyBattery
 
-`extensions/GlassyBattery.ext`, for the Mac.
+[`gl-link-glassybattery`](https://github.com/DecKirin/gl-link-glassybattery), for the Mac: an extension in a repository of its own, tested,
+signed and shared the way anyone's would be.
 
 [GlassyBattery](https://github.com/DecKirin/AirBattery) lists the batteries around a Mac in
 its menu bar, widgets and CLI, and shares them with other Macs. Its **BatteryBridge** API
