@@ -33,6 +33,11 @@ public final class ScriptExtension: Identifiable {
         public var title: String
         public var value: String
         public var id: String { title }
+
+        public init(title: String, value: String) {
+            self.title = title
+            self.value = value
+        }
     }
 
     /// A button the extension puts under it in Settings → Extensions: whatever it does, the
@@ -44,6 +49,13 @@ public final class ScriptExtension: Identifiable {
         public var destructive: Bool
         /// Asked before it's done, when set.
         public var confirm: String?
+
+        public init(id: String, title: String, destructive: Bool = false, confirm: String? = nil) {
+            self.id = id
+            self.title = title
+            self.destructive = destructive
+            self.confirm = confirm
+        }
     }
 
     public let package: ExtensionPackage
