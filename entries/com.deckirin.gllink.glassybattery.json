@@ -1,0 +1,30 @@
+{
+  "author" : "DecKirin",
+  "download" : "https://github.com/DecKirin/gl-link-glassybattery/releases/download/GlassyBattery-1.3.0/GlassyBattery-1.3.0.glext",
+  "host_api" : 1,
+  "id" : "com.deckirin.gllink.glassybattery",
+  "key" : "Bt7alM1UGN0aKQ/A6mOwbw2pg4/dPRiJEV8ZoVMRyLA=",
+  "kind" : "app",
+  "name" : "GlassyBattery",
+  "permissions" : {
+    "files" : [
+      "~/Library/Application Support/GlassyBattery/bridge.json"
+    ],
+    "network" : [
+      "127.0.0.1"
+    ],
+    "routers" : [
+      "battery",
+      "model"
+    ]
+  },
+  "platforms" : [
+    "macos"
+  ],
+  "repo" : "https://github.com/DecKirin/gl-link-glassybattery",
+  "sha256" : "68f2786ba92dd930388862efdf2177911a79486319437d6abb1e58f71c057a3c",
+  "size" : 16675,
+  "summary" : "Shows your routers’ batteries in GlassyBattery: its menu bar, widgets and your other Macs.",
+  "symbol" : "battery.75percent",
+  "version" : "1.3.0"
+}
