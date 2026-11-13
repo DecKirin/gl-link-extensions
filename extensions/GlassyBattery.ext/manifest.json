@@ -1,0 +1,18 @@
+{
+  "id": "com.deckirin.gllink.glassybattery",
+  "kind": "app",
+  "name": "GlassyBattery",
+  "version": "1.2.0",
+  "summary": "Shows your routers’ batteries in GlassyBattery: its menu bar, widgets and your other Macs.",
+  "symbol": "battery.75percent",
+  "platforms": ["macos"],
+  "author": "DecKirin",
+  "repo": "https://github.com/DecKirin/gl-link-extensions",
+  "host_api": 1,
+  "main": "main.js",
+  "permissions": {
+    "routers": ["battery", "model"],
+    "network": ["127.0.0.1"],
+    "files": ["~/Library/Application Support/GlassyBattery/bridge.json"]
+  }
+}

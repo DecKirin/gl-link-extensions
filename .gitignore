@@ -1,0 +1,8 @@
+.build/
+.swiftpm/
+build/
+*.glext
+# Keys never belong here
+*.key
+.DS_Store
+xcuserdata/

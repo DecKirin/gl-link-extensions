@@ -1,0 +1,11 @@
+name: test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tests
+        run: swift test
+      - name: gllink-ext checks the extensions here
+        run: for e in extensions/*.ext; do swift run gllink-ext check "$e"; done

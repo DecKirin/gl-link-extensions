@@ -1,0 +1,16 @@
+{
+  "id": "com.deckirin.gllink.hello",
+  "kind": "app",
+  "name": "Hello",
+  "version": "1.0.0",
+  "summary": "Each router’s battery, under its name in Settings: the smallest whole extension.",
+  "symbol": "hand.wave.fill",
+  "platforms": ["ios", "macos"],
+  "author": "DecKirin",
+  "repo": "https://github.com/DecKirin/gl-link-extensions",
+  "host_api": 1,
+  "main": "main.js",
+  "permissions": {
+    "routers": ["battery"]
+  }
+}
